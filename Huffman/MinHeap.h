@@ -34,11 +34,12 @@ public:
     MinHeap(int* freqArray);
     ~MinHeap();
     void buildHeap();
-    void percolateDown();
-    void percolateUp();
+    void percolateDown(int i);
+//    void percolateUp();
+    void insert();
     void deleteMin();
     int getHeapSize();
-    void print();
+//    void print();
     
 };
 
