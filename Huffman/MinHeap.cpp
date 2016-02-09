@@ -27,7 +27,7 @@ MinHeap::MinHeap(int* freqArray) {
     }
     
     nodeArray = new MinHeapNode[heapSize+1]();
-    MinHeapNode firstNode = {-1, -100};
+    MinHeapNode firstNode = {fNodeChar, fNodeFreq};
     nodeArray[0] = firstNode;
     int tempCounter = 1;
     for (int i = 0; i < SizeOfFreqArray; i++) {
@@ -66,12 +66,13 @@ void MinHeap::percolateDown(int i) {
         }
         if (nodeArray[child].freq < tmp.freq) {
             nodeArray[i] = nodeArray[child];
+            nodeArray[child] = tmp;
         }
         else {
             break;
         }
     }
-    nodeArray[child] = tmp;
+    
     
 }
 
@@ -81,9 +82,47 @@ void MinHeap::buildHeap() {
     }
 }
 
-//void MinHeap::print(){
-//    for(int i=1; i<heapSize + 1; i++)
-//    {
-//        cout << nodeArray[i].character << ": " << nodeArray[i].freq << endl;
-//    }
-//}
+//
+void MinHeap::deleteMin() {
+//**** need to check heapSize 1 & 0 ****
+    // resize the heap and remove the min
+    heapSize--;
+    MinHeapNode* oldNodeArray = nodeArray;
+    nodeArray = new MinHeapNode[heapSize + 1]();
+    MinHeapNode firstNode = {fNodeChar, fNodeFreq};
+    nodeArray[0] = firstNode;
+    // move the last element in the array to the first
+    nodeArray[1] = oldNodeArray[heapSize + 1];
+    for (int i = 2; i < heapSize + 1; i++) {
+        nodeArray[i] = oldNodeArray[i];
+    }
+    // percolate down from root
+    percolateDown(1);
+}
+
+void MinHeap::insert(MinHeapNode newNode) {
+    heapSize++;
+    MinHeapNode* oldNodeArray = nodeArray;
+    nodeArray = new MinHeapNode[heapSize + 1]();
+    MinHeapNode firstNode = {fNodeChar, fNodeFreq};
+    nodeArray[0] = firstNode;
+    for (int i = 1; i < heapSize; i++) {
+        nodeArray[i] = oldNodeArray[i];
+    }
+//    nodeArray[heapSize] = newNode;
+    int i = heapSize;
+    int parent;
+    for (; i != 0 && newNode.freq < nodeArray[i/2].freq; i = parent) {
+        parent = i / 2;
+        MinHeapNode tmp = nodeArray[parent];
+        nodeArray[parent] = newNode;
+        nodeArray[i] = tmp;
+    }
+}
+
+void MinHeap::print(){
+    for(int i=1; i<heapSize + 1; i++)
+    {
+        cout << nodeArray[i].character << ": " << nodeArray[i].freq << endl;
+    }
+}

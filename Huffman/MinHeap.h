@@ -9,6 +9,8 @@
 #ifndef MinHeap_h
 #define MinHeap_h
 #define SizeOfFreqArray 27
+#define fNodeChar -1
+#define fNodeFreq -100
 //class MinHeapNode {
 //private:
 //    char character;
@@ -36,10 +38,10 @@ public:
     void buildHeap();
     void percolateDown(int i);
 //    void percolateUp();
-    void insert();
+    void insert(MinHeapNode newNode);
     void deleteMin();
     int getHeapSize();
-//    void print();
+    void print();
     
 };
 

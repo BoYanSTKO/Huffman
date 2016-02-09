@@ -17,9 +17,15 @@ int main(int argc, const char * argv[]) {
 //    cout << (' '-'a') << endl;
 //    cout << char('a' + 1) << endl;
     
-//    int fArray[27]= {1,2,3,0,5,6,7,8,9,10,11,12,13,0,15,16,17,18,19,20,21,22,23,24,25,26,27};
-//    MinHeap mh = *new MinHeap(fArray);
-//    mh.print();
+    int fArray[27]= {2,1,4,22,9,6,11,25};
+    MinHeap mh = *new MinHeap(fArray);
+    mh.buildHeap();
+    mh.print();
+    mh.deleteMin();
+    mh.print();
+    MinHeapNode newNode = {'k', 3};
+    mh.insert(newNode);
+    mh.print();
     
     
     
