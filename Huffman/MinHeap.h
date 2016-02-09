@@ -8,18 +8,37 @@
 
 #ifndef MinHeap_h
 #define MinHeap_h
+#define SizeOfFreqArray 27
+//class MinHeapNode {
+//private:
+//    char character;
+//    int freq;
+//public:
+//    MinHeapNode();
+//    ~MinHeapNode();
+//    int getFreq();
+//};
+
 struct MinHeapNode {
     char character;
     int freq;
 };
 
 class MinHeap {
+
+private:
     int heapSize;
     MinHeapNode* nodeArray;
     
 public:
-    MinHeap();
+    MinHeap(int* freqArray);
     ~MinHeap();
+    void buildHeap();
+    void percolateDown();
+    void percolateUp();
+    void deleteMin();
+    int getHeapSize();
+    void print();
     
 };
 

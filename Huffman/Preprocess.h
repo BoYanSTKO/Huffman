@@ -9,13 +9,20 @@
 #ifndef Preprocess_h
 #define Preprocess_h
 #include <string>
+//struct MinHeapNode {
+//    char character;
+//    int freq;
+//};
+
 class Preprocess {
     std::string inputStr;
     int freqArray[27] = {}; // default value 0
+//    MinHeapNode 
 public:
     Preprocess();
     void readFile();
     void countFreq();
+    
     int* getFreqArray();
     ~Preprocess();
 };
