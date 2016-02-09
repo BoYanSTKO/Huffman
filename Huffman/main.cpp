@@ -7,9 +7,12 @@
 //
 
 #include <iostream>
-
+#include "Preprocess.h"
+using namespace std;
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+//    Preprocess test;
+//    test.readFile();
+//    cout << (' '-'a') << endl;
+    
     return 0;
 }
