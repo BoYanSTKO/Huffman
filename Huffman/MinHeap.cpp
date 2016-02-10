@@ -27,8 +27,13 @@ MinHeap::MinHeap(int* freqArray) {
     }
     cout << heapSize << " heapSize" << endl;;
     nodeArray = new MinHeapNode*[heapSize+1]();
+    // Declare and initilize the first node
     MinHeapNode* firstNode = new MinHeapNode();
-    *firstNode = {FNodeChar, FNodeFreq, NULL, NULL};
+    firstNode->character = FNodeChar;
+    firstNode->freq = FNodeFreq;
+    firstNode->left = NULL;
+    firstNode->right = NULL;
+
     nodeArray[0] = firstNode;
     int tempCounter = 1;
     for (int i = 0; i < SizeOfFreqArray; i++) {
@@ -38,11 +43,19 @@ MinHeap::MinHeap(int* freqArray) {
             MinHeapNode* heapNode = new MinHeapNode();
             if(i == SizeOfFreqArray-1)
             {
-                *heapNode = {char(' '), freqArray[i], NULL, NULL};
+                heapNode->character = char(' ');
+                heapNode->freq = freqArray[i];
+                heapNode->left = NULL;
+                heapNode->right = NULL;
+                //*heapNode = {char(' '), freqArray[i], NULL, NULL};
             }
             else
             {
-                *heapNode = {char('a' + (i)), freqArray[i], NULL, NULL};
+                heapNode->character = char('a' + i);
+                heapNode->freq = freqArray[i];
+                heapNode->left = NULL;
+                heapNode->right = NULL;
+                //*heapNode = {char('a' + (i)), freqArray[i], NULL, NULL};
             }
             
             nodeArray[tempCounter] = heapNode;
@@ -103,8 +116,14 @@ void MinHeap::deleteMin() {
 //    cout << oldNodeArray[1]->freq << endl;
     
     nodeArray = new MinHeapNode*[heapSize + 1]();
+    
     MinHeapNode* firstNode = new MinHeapNode();
-    *firstNode = {FNodeChar, FNodeFreq, NULL, NULL};
+    firstNode->character = FNodeChar;
+    firstNode->freq = FNodeFreq;
+    firstNode->left = NULL;
+    firstNode->right = NULL;
+    //*firstNode = {FNodeChar, FNodeFreq, NULL, NULL};
+    
     nodeArray[0] = firstNode;
     if (heapSize > 0) {
         // move the last element in the array to the first
@@ -127,8 +146,14 @@ void MinHeap::insert(MinHeapNode* newNode) {
     heapSize++;
     MinHeapNode** oldNodeArray = nodeArray;
     nodeArray = new MinHeapNode*[heapSize + 1]();
+
     MinHeapNode* firstNode = new MinHeapNode();
-    *firstNode = {FNodeChar, FNodeFreq, NULL, NULL};
+    firstNode->character = FNodeChar;
+    firstNode->freq = FNodeFreq;
+    firstNode->left = NULL;
+    firstNode->right = NULL;
+    //*firstNode = {FNodeChar, FNodeFreq, NULL, NULL};
+
     nodeArray[0] = firstNode;
     for (int i = 1; i < heapSize; i++) {
         nodeArray[i] = oldNodeArray[i];
@@ -159,8 +184,14 @@ void MinHeap::constructTrie() {
         MinHeapNode* leftN = minItem;
 //        *leftN = {minItem->character, minItem->freq, minItem->left, minItem->right};
         int internalNFreq = rightN->freq + leftN->freq;
+
         MinHeapNode* internalN = new MinHeapNode();
-        *internalN = {INodeChar, internalNFreq, leftN, rightN};
+        internalN->character = INodeChar;
+        internalN->freq = internalNFreq;
+        internalN->left = leftN;
+        internalN->right = rightN;
+        //*internalN = {INodeChar, internalNFreq, leftN, rightN};
+
 //        cout << internalN.left->character << endl;
         insert(internalN);
 //        cout << nodeArray[1].left->character << endl;
