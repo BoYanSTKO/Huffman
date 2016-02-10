@@ -20,14 +20,23 @@ int main(int argc, const char * argv[]) {
     int fArray[27]= {2,1,4,22,9,6,11,25};
     MinHeap mh = *new MinHeap(fArray);
     mh.buildHeap();
-    mh.print();
+    mh.printMinHeap();
     mh.deleteMin();
-    mh.print();
+    mh.printMinHeap();
+    mh.deleteMin();
+    mh.printMinHeap();
+    mh.deleteMin();
+    mh.printMinHeap();
     MinHeapNode newNode = {'k', 3};
-    mh.insert(newNode);
-    mh.print();
+    mh.insert(&newNode);
+    mh.printMinHeap();
     
     
+    
+    cout << endl;
+//    mh.constructTrie();
+//    mh.huffmanEncode(mh.getRootNode(), new int[30], 0);
+//    mh.printCode();
     
     return 0;
 }
