@@ -77,7 +77,7 @@ MinHeap::MinHeap(int* freqArray)
         }        
     }
     minItem = NULL;
-    decodedText = "";
+    
     //hMap = new huffmanMap[heapSize]();
     hMapCounter = 0;    
 }
@@ -269,34 +269,6 @@ void MinHeap::huffmanEncode(MinHeapNode* root, int arr[], int top) {
     }
 }
 
-void MinHeap::huffmanDecode(MinHeapNode* root, string decodeStr, int pos) {
-    if (root->left == NULL && root->right == NULL) {
-        decodedText += root->character;
-        cout << decodedText << endl;
-        huffmanDecode((this->nodeArray)[1], decodeStr, pos+1);
-    }
-    if (decodeStr[pos] == '1' && pos < decodeStr.length()) {
-        huffmanDecode(root->left, decodeStr, pos+1);
-    }
-    if (decodeStr[pos] == '0' && pos < decodeStr.length()) {
-        huffmanDecode(root->right, decodeStr, pos+1);
-    }
-//    if (decodeStr[pos] == '1') {
-//        if (root->left != NULL) {
-//            huffmanDecode(root->left, decodeStr, pos+1);
-//        }
-//        else {
-//            decodedText += root
-//        }
-//    }
-//    for (int i = 0; i < decodeText.length(); i++) {
-//        if (decodeText[i] == '1') {
-//            
-//        }
-//    }
-}
-
-
 void MinHeap::printMinHeap(){
     for(int i=1; i<heapSize + 1; i++)
     {
@@ -316,12 +288,10 @@ void MinHeap::printCode(){
 MinHeapNode* MinHeap::getRootNode(){
     return (this->nodeArray)[1];
 }
-string MinHeap::getDecodedText() {
-    return decodedText;
+
+MinHeapNode* MinHeap::getMinItem() {
+    return minItem;
 }
-//MinHeapNode* MinHeap::getMinItem() {
-//    return minItem;
-//}
 
 
 string MinHeap::int_array_to_string(int int_array[], int size_of_array) {
