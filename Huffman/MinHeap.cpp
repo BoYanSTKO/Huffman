@@ -8,6 +8,10 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <iomanip>
+#include <locale>
+#include <sstream>
+#include <string> // this should be already included in <sstream>
 #include "MinHeap.h"
 using namespace std;
 
@@ -74,7 +78,7 @@ MinHeap::MinHeap(int* freqArray)
     }
     minItem = NULL;
     
-    hMap = new huffmanMap[heapSize]();
+    //hMap = new huffmanMap[heapSize]();
     hMapCounter = 0;    
 }
 
@@ -178,10 +182,13 @@ void MinHeap::insert(MinHeapNode* newNode) {
     //*firstNode = {FNodeChar, FNodeFreq, NULL, NULL};
     nodeArray[0] = firstNode;
     
+    //cout << "insert" << endl;
     for (int i = 1; i < heapSize; i++) {
         nodeArray[i] = oldNodeArray[i];
+
+        //cout << nodeArray[i]->character << ": " << nodeArray[i]->freq << endl;
     }
-//    nodeArray[heapSize] = newNode;
+    nodeArray[heapSize] = newNode;
     int i = heapSize;
     int parent;
     for (; i != 0 && newNode->freq < nodeArray[i/2]->freq; i = parent) {
@@ -192,6 +199,14 @@ void MinHeap::insert(MinHeapNode* newNode) {
     }
     delete [] oldNodeArray;
 //    cout << &nodeArray[1] << endl;
+
+    cout << endl;
+    for(int i=1; i<heapSize + 1; i++)
+    {
+        cout << nodeArray[i]->character << ": " << nodeArray[i]->freq << endl;
+    }
+    cout << endl;
+
 }
 
 void MinHeap::constructTrie() {
@@ -221,26 +236,34 @@ void MinHeap::constructTrie() {
     }
     cout << "trie" << endl;
     cout << nodeArray[1]->left->character << ": " << nodeArray[1]->freq << endl;
+
+    hMap = new huffmanMap*[heapSize]();
 }
 
 void MinHeap::huffmanEncode(MinHeapNode* root, int arr[], int top) {
     
+    
+
     if (root->left != NULL) {
-        cout << "!!!" << endl;
+        cout << "left: " << root->left->character << " (" << root->left->freq << ")" << endl;
         arr[top] = 1;
         huffmanEncode(root->left, arr, top+1);
     }
     if(root-> right != NULL)
     {
-        cout << "@@@@" << endl;
+        cout << "right: " << root->right->character << " (" << root->right->freq << ")" << endl;
         arr[top] = 0;
         huffmanEncode(root->right, arr, top+1);
     }
     
     if(root->left == NULL && root->right == NULL)
-    {
-        huffmanMap tempHMap = {root->character, int_array_to_string(arr, top)};
-        cout << tempHMap.character<< endl;
+    {   
+        cout << "3" << endl;
+        huffmanMap* tempHMap = new huffmanMap();
+        tempHMap->character = root->character;
+        tempHMap->huffmanCode = int_array_to_string(arr, top);
+        //huffmanMap tempHMap = {root->character, int_array_to_string(arr, top)};
+        cout << "leaf: " << tempHMap->character << " (" << tempHMap->huffmanCode << ")" << endl;
         hMap[hMapCounter] = tempHMap;
         hMapCounter++;
     }
@@ -256,7 +279,7 @@ void MinHeap::printMinHeap(){
 void MinHeap::printCode(){
     for(int i=0; i<hMapCounter; i++)
     {
-        cout << hMap->character << ": " << hMap->huffmanCode << endl;
+        cout << hMap[i]->character << ": " << hMap[i]->huffmanCode << endl;
     }
     
     
@@ -273,8 +296,15 @@ MinHeapNode* MinHeap::getMinItem() {
 
 string MinHeap::int_array_to_string(int int_array[], int size_of_array) {
     string returnstring = "";
+    string tempString;
     for (int temp = 0; temp < size_of_array; temp++)
-        returnstring + char(int_array[temp]);
+    {
+        ostringstream convert;   // stream used for the conversion
+        convert << int_array[temp];      // insert the textual representation of 'Number' in the characters in the stream
+        tempString = convert.str();
+        returnstring += tempString;
+    }
+    cout << "to String: " << returnstring << endl;
     return returnstring;
 }
 
