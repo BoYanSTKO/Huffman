@@ -6,13 +6,14 @@
 //  Copyright © 2016 Bo_Yiting. All rights reserved.
 //
 #include <string>
-using namespace std;
 #ifndef MinHeap_h
 #define MinHeap_h
 #define SizeOfFreqArray 27
 #define FNodeChar '1'
 #define FNodeFreq -100
 #define INodeChar '2'
+using namespace std;
+
 //class MinHeapNode {
 //private:
 //    char character;
@@ -44,6 +45,7 @@ private:
     huffmanMap** hMap;
     int hMapCounter;
     MinHeapNode* minItem;
+    string decodedText;
     string int_array_to_string(int int_array[], int size_of_array);
     
 public:
@@ -56,7 +58,9 @@ public:
     void deleteMin();
     void constructTrie();
     void huffmanEncode(MinHeapNode* root, int arr[], int top);
-    MinHeapNode* getMinItem();
+    void huffmanDecode(MinHeapNode* root, string decodeStr, int pos);
+    string getDecodedText();
+//    MinHeapNode* getMinItem();
 //    int getHeapSize();
     void printMinHeap();
     void printCode();
