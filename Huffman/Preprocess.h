@@ -15,6 +15,7 @@
 //};
 
 class Preprocess {
+private:	
     std::string inputStr;
     int freqArray[27]; // default value 0
 //    MinHeapNode 
