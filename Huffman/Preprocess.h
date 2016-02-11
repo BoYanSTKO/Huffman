@@ -17,15 +17,13 @@
 class Preprocess {
 private:	
     std::string inputStr;
-    std::string decodeStr;
     int freqArray[27]; // default value 0
 //    MinHeapNode 
 public:
     Preprocess();
     void readFile();
-    void readDecodeFile();
     void countFreq();
-    std::string getDecodeStr();
+    
     int* getFreqArray();
     ~Preprocess();
 };
