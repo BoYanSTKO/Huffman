@@ -41,7 +41,7 @@ class MinHeap {
 private:
     int heapSize;
     MinHeapNode** nodeArray;
-    huffmanMap* hMap;
+    huffmanMap** hMap;
     int hMapCounter;
     MinHeapNode* minItem;
     string int_array_to_string(int int_array[], int size_of_array);
