@@ -21,7 +21,7 @@ Preprocess::Preprocess() {
 }
 
 void Preprocess::readFile() {
-    std::ifstream in("/home/yiting/Dropbox/Winter2016/CMPSC130A/project2/Huffman-master/Huffman/plain.input");
+    std::ifstream in("/Users/boyan/Dropbox/UCSB_Class/CS130A/PJ2/Huffman/Huffman/plain.input");
     std::string contents((std::istreambuf_iterator<char>(in)),
                          std::istreambuf_iterator<char>());
 //    std::cout << contents.c_str() << std::endl;
@@ -49,10 +49,21 @@ void Preprocess::countFreq() {
 //    return freqArray;
 }
 
+void Preprocess::readDecodeFile() {
+    std::ifstream in("/Users/boyan/Dropbox/UCSB_Class/CS130A/PJ2/Huffman/Huffman/encoded.input");
+    std::string contents((std::istreambuf_iterator<char>(in)),
+                         std::istreambuf_iterator<char>());
+    //        std::cout << contents.c_str() << std::endl;
+    decodeStr = contents.c_str();
+    //    std::cout << decodeStr[1]<< std::endl;
+}
+
 int* Preprocess::getFreqArray() {
     return freqArray;
 }
-
+std::string Preprocess::getDecodeStr() {
+    return decodeStr;
+}
 
 Preprocess::~Preprocess() {
     

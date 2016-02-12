@@ -12,20 +12,24 @@
 
 using namespace std;
 int main(int argc, const char * argv[]) {
-   Preprocess test;
-   test.readFile();
-   test.countFreq();
-    // int fArray[27]= {1,0,0,0,2,0,0,0,2,0,1,2,0,0,0,2,0,0,1,0,0,0,0,0,0,0,2};
+    Preprocess test;
+    test.readDecodeFile();
+    test.readFile();
+    test.countFreq();
+    string decodeStr = test.getDecodeStr();
+    cout << decodeStr << endl;
     MinHeap mh = *new MinHeap(test.getFreqArray());
     mh.buildHeap();
     mh.printMinHeap();
     cout << endl;
     mh.constructTrie();
     mh.huffmanEncode(mh.getRootNode(), new int[30], 0);
-    cout << endl;
-    cout << endl;
+    cout << "pppppppppp" << endl;
     mh.printCode();
-
+    cout << "test here" << endl;
+//    mh.huffmanDecode(mh.getRootNode(), decodeStr, 0);
+//    cout << " to here" << endl;
+//    cout << mh.getDecodedText() << endl;
 //    cout << (' '-'a') << endl;
 //    cout << char('a' + 1) << endl;
     
