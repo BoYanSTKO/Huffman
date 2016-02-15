@@ -8,25 +8,30 @@
 
 #ifndef Preprocess_h
 #define Preprocess_h
-#include <string>
-//struct MinHeapNode {
-//    char character;
-//    int freq;
-//};
 
-class Preprocess {
+#define NUM_CHAR 27		// The total number of characters that would accept 
+						//   (for this project: a-z & space)
+
+#include <string>
+
+using namespace std;
+
+
+class Preprocess
+{
 private:	
-    std::string inputStr;
-    std::string decodeStr;
-    int freqArray[27];
-//    MinHeapNode 
+    string inputStr;	// string get from the input file which is going
+    						//	 to build huffman tree and get encoded
+    int freqArray[NUM_CHAR];	// frequency of all characters
+
 public:
     Preprocess();
-    void readFile();
-    void readDecodeFile();
+    // Constructor of Preprocess; initalize the variables
+    void readFile(string filePath);
+    // Read string from the file located at the filePath and store it into member variable inputStr
     void countFreq();
-    std::string getDecodeStr();
     int* getFreqArray();
+    string getInputStr();
     ~Preprocess();
 };
 
