@@ -7,29 +7,38 @@
 //
 
 #include <iostream>
+#include <string>
 #include "Preprocess.h"
 #include "MinHeap.h"
 
 using namespace std;
 int main(int argc, const char * argv[]) {
+
+    string inputFilePath = "./plain.input";
+
+
     Preprocess test;
-    test.readDecodeFile();
-    test.readFile();
+    test.readFile(inputFilePath);
     test.countFreq();
-    string decodeStr = test.getDecodeStr();
-    cout << decodeStr << endl;
+    int fArray[27]= {1,0,0,0,2,0,0,0,2,0,1,2,0,0,0,2,0,0,1,0,0,0,0,0,0,0,2};
     MinHeap mh = *new MinHeap(test.getFreqArray());
     mh.buildHeap();
     mh.printMinHeap();
     cout << endl;
     mh.constructTrie();
-    mh.huffmanEncode(mh.getRootNode(), new int[30], 0);
-    cout << "pppppppppp" << endl;
+    cout << endl;
+    mh.printTrie(mh.getRootNode());
+    cout << endl;
+    int temArray[30];
+    mh.huffmanEncode(mh.getRootNode(), temArray, 0);
+    mh.printTrie(mh.getRootNode());
+    cout << endl;
+
     mh.printCode();
-    cout << "test here" << endl;
-//    mh.huffmanDecode(mh.getRootNode(), decodeStr, 0);
-//    cout << " to here" << endl;
-//    cout << mh.getDecodedText() << endl;
+    cout << endl;
+
+    mh.encodeStr(test.getInputStr());
+
 //    cout << (' '-'a') << endl;
 //    cout << char('a' + 1) << endl;
     
