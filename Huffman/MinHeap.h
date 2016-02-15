@@ -41,10 +41,9 @@ class MinHeap {
 private:
     int heapSize;
     MinHeapNode** nodeArray;
-    huffmanMap** hMap;
+    struct huffmanMap * hMap;
     int hMapCounter;
     MinHeapNode* minItem;
-    string decodedText;
     string int_array_to_string(int int_array[], int size_of_array);
     
 public:
@@ -57,13 +56,13 @@ public:
     void deleteMin();
     void constructTrie();
     void huffmanEncode(MinHeapNode* root, int arr[], int top);
-    void huffmanDecode(MinHeapNode* root, string decodeStr, int pos);
-    string getDecodedText();
-//    MinHeapNode* getMinItem();
+    string encodeStr(string str);
+    MinHeapNode* getMinItem();
 //    int getHeapSize();
     void printMinHeap();
     void printCode();
     MinHeapNode* getRootNode();
+    void printTrie(MinHeapNode* root);
     
 };
 
