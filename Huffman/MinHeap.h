@@ -44,6 +44,7 @@ private:
     struct huffmanMap * hMap;
     int hMapCounter;
     MinHeapNode* minItem;
+    string decodedText;
     string int_array_to_string(int int_array[], int size_of_array);
     
 public:
@@ -57,6 +58,8 @@ public:
     void constructTrie();
     void huffmanEncode(MinHeapNode* root, int arr[], int top);
     string encodeStr(string str);
+    void huffmanDecode(MinHeapNode* root, string decodeStr, int pos);
+    string getDecodedText();
     MinHeapNode* getMinItem();
 //    int getHeapSize();
     void printMinHeap();

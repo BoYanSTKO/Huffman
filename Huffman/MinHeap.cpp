@@ -88,7 +88,7 @@ MinHeap::MinHeap(int* freqArray)
         hMap[i].huffmanCode = "code";
     }
 
-
+    decodedText = "";
     hMapCounter = 0;    
 }
 
@@ -364,6 +364,27 @@ string MinHeap::encodeStr(string str)
     }
     cout << "The huffman code for " << str << " is " << code << endl;
     return code;
+}
+
+void MinHeap::huffmanDecode(MinHeapNode* root, string decodeStr, int pos) {
+    cout << "decodeeeeee" << endl;
+    if (root != NULL) {
+        if ((root->left) == NULL && (root->right) == NULL) {
+            decodedText += root->character;
+            cout << decodedText << endl;
+            huffmanDecode((this->nodeArray)[1], decodeStr, pos);
+        }
+        if (decodeStr[pos] == '1' && pos < decodeStr.length()) {
+            huffmanDecode(root->left, decodeStr, pos+1);
+        }
+        if (decodeStr[pos] == '0' && pos < decodeStr.length()) {
+            huffmanDecode(root->right, decodeStr, pos+1);
+        }
+        
+    }
+}
+string MinHeap::getDecodedText() {
+    return decodedText;
 }
 
 

@@ -23,6 +23,8 @@ private:
     string inputStr;	// string get from the input file which is going
     						//	 to build huffman tree and get encoded
     int freqArray[NUM_CHAR];	// frequency of all characters
+    
+    string decodeStr; // store decode string
 
 public:
     Preprocess();
@@ -30,6 +32,8 @@ public:
     void readFile(string filePath);
     // Read string from the file located at the filePath and store it into member variable inputStr
     void countFreq();
+    void readDecodeFile(); // read decode files
+    string getDecodeStr(); // get decode string
     int* getFreqArray();
     string getInputStr();
     ~Preprocess();

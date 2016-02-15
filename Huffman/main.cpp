@@ -14,13 +14,13 @@
 using namespace std;
 int main(int argc, const char * argv[]) {
 
-    string inputFilePath = "./plain.input";
+    string inputFilePath = "/Users/boyan/Dropbox/UCSB_Class/CS130A/PJ2/Huffman/Huffman/plain.input";
 
 
     Preprocess test;
     test.readFile(inputFilePath);
     test.countFreq();
-    int fArray[27]= {1,0,0,0,2,0,0,0,2,0,1,2,0,0,0,2,0,0,1,0,0,0,0,0,0,0,2};
+//    int fArray[27]= {1,0,0,0,2,0,0,0,2,0,1,2,0,0,0,2,0,0,1,0,0,0,0,0,0,0,2};
     MinHeap mh = *new MinHeap(test.getFreqArray());
     mh.buildHeap();
     mh.printMinHeap();
@@ -38,6 +38,13 @@ int main(int argc, const char * argv[]) {
     cout << endl;
 
     mh.encodeStr(test.getInputStr());
+    
+    cout << "DECODE" << endl;
+    test.readDecodeFile();
+    string decodeStr = test.getDecodeStr();
+    mh.huffmanDecode(mh.getRootNode(), decodeStr, 0);
+    cout << "decode results: " << endl;
+    cout << mh.getDecodedText() << endl;
 
 //    cout << (' '-'a') << endl;
 //    cout << char('a' + 1) << endl;

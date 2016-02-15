@@ -63,6 +63,19 @@ void Preprocess::countFreq() {
     }
 }
 
+void Preprocess::readDecodeFile() {
+    std::ifstream in("/Users/boyan/Dropbox/UCSB_Class/CS130A/PJ2/Huffman/Huffman/encoded.input");
+    std::string contents((std::istreambuf_iterator<char>(in)),
+                         std::istreambuf_iterator<char>());
+    //        std::cout << contents.c_str() << std::endl;
+    decodeStr = contents.c_str();
+    //    std::cout << decodeStr[1]<< std::endl;
+}
+
+string Preprocess::getDecodeStr() {
+    return decodeStr;
+}
+
 
 int* Preprocess::getFreqArray() {
     return this->freqArray;
