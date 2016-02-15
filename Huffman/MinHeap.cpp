@@ -77,14 +77,38 @@ MinHeap::MinHeap(int* freqArray)
         }        
     }
     minItem = NULL;
-    decodedText = "";
+
+
+    // Initialize hMap
     //hMap = new huffmanMap[heapSize]();
+    hMap = new huffmanMap[heapSize];
+    for(int i=0; i<heapSize; i++)       // Initialize with placeholders
+    {
+        hMap[i].character = '9';    
+        hMap[i].huffmanCode = "code";
+    }
+
+
     hMapCounter = 0;    
 }
 
 
 MinHeap::~MinHeap() {
-    
+    int nodeArraySize = (sizeof((nodeArray))/sizeof((nodeArray[0])));
+    for (int i = 0; i < nodeArraySize; i++) { // only free inside if dynamically allocated - not if just storing pointers
+        delete nodeArray[i];
+        nodeArray[i] = NULL;
+    }
+    delete [] nodeArray;
+
+    int hMapSize = (sizeof((hMap))/sizeof((hMap[0])));
+    // for (int i = 0; i < hMapSize; i++) { // only free inside if dynamically allocated - not if just storing pointers
+    //     delete hMap[i];
+    //     hMap[i] = NULL;
+    // }
+    delete [] hMap;
+    // delete [] minItem;
+
 }
 
 
@@ -136,13 +160,14 @@ void MinHeap::deleteMin() {
     // cout << heapSize << " after deleteMin" << endl;
 //    cout << nodeArray[5]->character << " character " << endl;
     MinHeapNode** oldNodeArray = nodeArray;
+    int oldNodeArraySize = (sizeof((oldNodeArray))/sizeof((oldNodeArray[0])));
     minItem = oldNodeArray[1];
 //    cout << (sizeof(nodeArray)) << " size" << endl;
     // cout << nodeArray[heapSize+1]->character << endl;
     // cout << oldNodeArray[heapSize+1]->character << endl;
 //    cout << oldNodeArray[1]->freq << endl;
     
-    nodeArray = new MinHeapNode*[heapSize + 1]();
+    nodeArray = new MinHeapNode*[heapSize + 1];
     
     MinHeapNode* firstNode = new MinHeapNode();
     firstNode->character = FNodeChar;
@@ -159,11 +184,16 @@ void MinHeap::deleteMin() {
         //cout << nodeArray[1]->character << endl;
         for (int i = 2; i < heapSize + 1; i++) {
             nodeArray[i] = oldNodeArray[i];
+            //delete oldNodeArray[i];
         }
         // percolate down from root
         percolateDown(1);
     }
-    
+
+    for (int i = 0; i < oldNodeArraySize; i++) { // only free inside if dynamically allocated - not if just storing pointers
+        delete oldNodeArray[i];
+        oldNodeArray[i] = NULL;
+    }
     delete [] oldNodeArray;
     //cout << "Min item freq: " << minItem->freq << endl;
 //    return minNode;
@@ -172,7 +202,8 @@ void MinHeap::deleteMin() {
 void MinHeap::insert(MinHeapNode* newNode) {
     heapSize++;
     MinHeapNode** oldNodeArray = nodeArray;
-    nodeArray = new MinHeapNode*[heapSize + 1]();
+    int oldNodeArraySize = (sizeof((oldNodeArray))/sizeof((oldNodeArray[0])));
+    nodeArray = new MinHeapNode*[heapSize + 1];
 
     MinHeapNode* firstNode = new MinHeapNode();
     firstNode->character = FNodeChar;
@@ -182,7 +213,7 @@ void MinHeap::insert(MinHeapNode* newNode) {
     //*firstNode = {FNodeChar, FNodeFreq, NULL, NULL};
     nodeArray[0] = firstNode;
     
-    //cout << "insert" << endl;
+    cout << "insert" << endl;
     for (int i = 1; i < heapSize; i++) {
         nodeArray[i] = oldNodeArray[i];
 
@@ -197,11 +228,17 @@ void MinHeap::insert(MinHeapNode* newNode) {
         nodeArray[parent] = newNode;
         nodeArray[i] = tmp;
     }
+
+    for (int i = 0; i < oldNodeArraySize; i++) { // only free inside if dynamically allocated - not if just storing pointers
+        delete oldNodeArray[i];
+        oldNodeArray[i] = NULL;
+    }
+
     delete [] oldNodeArray;
 //    cout << &nodeArray[1] << endl;
 
     cout << endl;
-    for(int i=1; i<heapSize + 1; i++)
+    for(int i=0; i<heapSize + 1; i++)
     {
         cout << nodeArray[i]->character << ": " << nodeArray[i]->freq << endl;
     }
@@ -230,62 +267,105 @@ void MinHeap::constructTrie() {
         internalN->right = rightN;
         //*internalN = {INodeChar, internalNFreq, leftN, rightN};
 
-//        cout << internalN.left->character << endl;
+        cout << internalN->left->character << endl;
         insert(internalN);
 //        cout << nodeArray[1].left->character << endl;
     }
-    cout << "trie" << endl;
-    cout << nodeArray[1]->left->character << ": " << nodeArray[1]->freq << endl;
+    cout << "trie done" << endl;
+    cout << nodeArray[1]->character << ": " << nodeArray[1]->freq << endl;
+    cout << nodeArray[1]->left->character << ": " << nodeArray[1]->left->freq << endl;
+    cout << nodeArray[1]->right->character << ": " << nodeArray[1]->right->freq << endl;
 
-    hMap = new huffmanMap*[heapSize]();
+    // hMap = new huffmanMap*[heapSize];
+
 }
 
 void MinHeap::huffmanEncode(MinHeapNode* root, int arr[], int top) {
-    if (root->left != NULL) {
-        cout << "left: " << root->left->character << " (" << root->left->freq << ")" << endl;
-        arr[top] = 1;
-        huffmanEncode(root->left, arr, top+1);
-    }
-    if(root-> right != NULL)
+    MinHeapNode* rootPtr = this->nodeArray[1];
+    if(root != NULL)
     {
-        cout << "right: " << root->right->character << " (" << root->right->freq << ")" << endl;
-        arr[top] = 0;
-        huffmanEncode(root->right, arr, top+1);
-    }
-    
-    if(root->left == NULL && root->right == NULL)
-    {   
-        cout << "3" << endl;
-        huffmanMap* tempHMap = new huffmanMap();
-        tempHMap->character = root->character;
-        tempHMap->huffmanCode = int_array_to_string(arr, top);
-        //huffmanMap tempHMap = {root->character, int_array_to_string(arr, top)};
-        cout << "leaf: " << tempHMap->character << " (" << tempHMap->huffmanCode << ")" << endl;
-        hMap[hMapCounter] = tempHMap;
-        hMapCounter++;
-    }
-}
+        // cout << "right: " << root->right->character << " (" << root->right->freq << ")" << endl;
+        // cout << "left: " << root->left->character << " (" << root->left->freq << ")" << endl;
 
-void MinHeap::huffmanDecode(MinHeapNode* root, string decodeStr, int pos) {
-    cout << "decodeeeeee" << endl;
-    if (root != NULL) {
-        if (root->left == NULL && root->right == NULL) {
-            decodedText += root->character;
-            cout << decodedText << endl;
-            huffmanDecode((this->nodeArray)[1], decodeStr, pos);
+        //cout << "root: " << root->character << " (" << root->freq << ")" << endl;
+        cout << "level: " << top << endl;
+        if (root->left != NULL)
+        {
+            cout << "left: " << root->left->character << " (" << root->left->freq << ")" << endl;
+            arr[top] = 1;
+            huffmanEncode(root->left, arr, top+1);
         }
-        if (decodeStr[pos] == '1' && pos < decodeStr.length()) {
-            huffmanDecode(root->left, decodeStr, pos+1);
+        cout << "after left level: " << top << endl;
+        cout << "root: " << getRootNode()->character << " (" << getRootNode()->freq << ")" << endl;
+        //printTrie(getRootNode());
+        if(root->right != NULL)
+        {
+            cout << "right: " << root->right->character << " (" << root->right->freq << ")" << endl;
+            arr[top] = 0;
+            huffmanEncode(root->right, arr, top+1);
         }
-        if (decodeStr[pos] == '0' && pos < decodeStr.length()) {
-            huffmanDecode(root->right, decodeStr, pos+1);
+
+        if(root->left == NULL && root->right == NULL)
+        {
+            cout << "3" << endl;
+            huffmanMap tempHMap;
+            tempHMap.character = root->character;
+            tempHMap.huffmanCode = int_array_to_string(arr, top);
+            // //huffmanMap tempHMap = {root->character, int_array_to_string(arr, top)};
+            cout << "leaf: " << tempHMap.character << " (" << tempHMap.huffmanCode << ")" << endl;
+            cout << endl;
+            hMap[hMapCounter] = tempHMap;
+            hMapCounter++;
+            cout << "hMapCounter: " << hMapCounter << endl;
         }
+        cout << "end level: " << top << endl;
         
     }
+    cout << "the ultimate root is " << rootPtr->character << " (" << rootPtr->freq << ")" << endl;
+
 }
-string MinHeap::getDecodedText() {
-    return decodedText;
+
+
+string MinHeap::encodeStr(string str)
+// Encode the str into huffman code based on the hMap; return with a string of huffman codes
+{
+    string code = "";    // the huffman code which was derived from string based on the Min Heap
+    for (int i = 0; i < str.size(); i++)
+    {
+        // lowercase letters
+        char tempChar = str[i];
+        if(((tempChar - 'a') >= 0 && (tempChar - 'a') <= 25) || tempChar == ' ')   // a-z or space ' '
+        {
+            string tempCharCode = "";
+            int tempCounter = 0;
+            while(tempCharCode == "")
+            {
+                if(this->hMap[tempCounter].character == tempChar)
+                {
+                    tempCharCode = this->hMap[tempCounter].huffmanCode;
+                }
+                else
+                {
+                    tempCounter++;
+                    if(tempCounter >= hMapCounter)
+                    {
+                        cout << "Warning: the string that is being encoded is not in the hMap.." << endl;
+                        break;
+                    }
+                }
+            }
+            code += tempCharCode;
+        }
+        else
+        {
+            // other symbols including line feeding
+            cout << "Warning: other symbol occurs..." << endl;
+        }
+    }
+    cout << "The huffman code for " << str << " is " << code << endl;
+    return code;
 }
+
 
 void MinHeap::printMinHeap(){
     for(int i=1; i<heapSize + 1; i++)
@@ -294,22 +374,38 @@ void MinHeap::printMinHeap(){
     }
 }
 
+
+void MinHeap::printTrie(MinHeapNode* root){
+    if(root != NULL)
+    {
+        cout << root->character << " (" << root->freq << ")" << endl;
+        if(root->left != NULL)
+        {
+            printTrie(root->left);
+        }
+        if(root->right != NULL)
+        {
+            printTrie(root->right);
+        }
+    }
+}
+
+
 void MinHeap::printCode(){
     for(int i=0; i<hMapCounter; i++)
     {
-        cout << hMap[i]->character << ": " << hMap[i]->huffmanCode << endl;
+        cout << hMap[i].character << ": " << hMap[i].huffmanCode << endl;
     }
-    
-    
+
 }
 
 MinHeapNode* MinHeap::getRootNode(){
-    return nodeArray[1];
+    return (this->nodeArray)[1];
 }
 
-//MinHeapNode* MinHeap::getMinItem() {
-//    return minItem;
-//}
+MinHeapNode* MinHeap::getMinItem() {
+    return minItem;
+}
 
 
 string MinHeap::int_array_to_string(int int_array[], int size_of_array) {
