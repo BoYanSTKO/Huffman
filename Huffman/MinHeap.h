@@ -22,7 +22,7 @@ using namespace std;
 //    ~MinHeapNode();
 //    int getFreq();
 //};
-
+ 
 struct MinHeapNode {
     char character;
     int freq;
