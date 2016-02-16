@@ -13,16 +13,8 @@ using namespace std;
 #define FNodeChar '1'
 #define FNodeFreq -100
 #define INodeChar '2'
-//class MinHeapNode {
-//private:
-//    char character;
-//    int freq;
-//public:
-//    MinHeapNode();
-//    ~MinHeapNode();
-//    int getFreq();
-//};
- 
+
+
 struct MinHeapNode {
     char character;
     int freq;
@@ -43,31 +35,27 @@ private:
     MinHeapNode** nodeArray;
     struct huffmanMap * hMap;
     int hMapCounter;
-    MinHeapNode* minItem;
+    MinHeapNode* minItem;    
     string decodedText;
     string int_array_to_string(int int_array[], int size_of_array);
-    
+
 public:
-    MinHeap(int* freqArray);
-    ~MinHeap();
+    MinHeap(int* freqArray);    
     void buildHeap();
     void percolateDown(int i);
-//    void percolateUp();
     void insert(MinHeapNode* newNode);
     void deleteMin();
     void constructTrie();
     void huffmanEncode(MinHeapNode* root, int arr[], int top);
     string encodeStr(string str);
-    void huffmanDecode(MinHeapNode* root, string decodeStr, int pos);
-    string getDecodedText();
     MinHeapNode* getMinItem();
-//    int getHeapSize();
     void printMinHeap();
     void printCode();
     MinHeapNode* getRootNode();
     void printTrie(MinHeapNode* root);
-    
+    void huffmanDecode(MinHeapNode* root, string decodeStr, int pos);
+    string getDecodedText();
+    ~MinHeap();
 };
 
 #endif /* MinHeap_h */
- 
