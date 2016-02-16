@@ -23,8 +23,8 @@ private:
     string inputStr;	// string get from the input file which is going
     						//	 to build huffman tree and get encoded
     int freqArray[NUM_CHAR];	// frequency of all characters
-    
     string decodeStr; // store decode string
+
 
 public:
     Preprocess();
