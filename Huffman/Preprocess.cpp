@@ -36,10 +36,7 @@ void Preprocess::readFile(string filePath)
     std::ifstream in(filePath.c_str());
     std::string contents((std::istreambuf_iterator<char>(in)),
                          std::istreambuf_iterator<char>());
-    // std::cout << contents.c_str() << std::endl;
     this->inputStr = contents.c_str();
-    cout << inputStr << std::endl;
-    cout << "done" << endl;
 }
 
 
@@ -55,9 +52,9 @@ void Preprocess::countFreq() {
         {
             this->freqArray[26]++;
         }
-        else { 
+        else
+        { 
             // other symbols including line feeding
-            cout << int(inputStr[i]) << " 1234" << endl;
             inputStr.erase(i);  // get rid of this symbol
             i--;
         }        
@@ -80,9 +77,7 @@ void Preprocess::readDecodeFile() {
     std::ifstream in("./encoded.input");
     std::string contents((std::istreambuf_iterator<char>(in)),
                          std::istreambuf_iterator<char>());
-    //        std::cout << contents.c_str() << std::endl;
     decodeStr = contents.c_str();
-    //    std::cout << decodeStr[1]<< std::endl;
 
     // makesure only read in 0 and 1
     for (int i = 0; i < decodeStr.size(); i++)
@@ -90,7 +85,6 @@ void Preprocess::readDecodeFile() {
         if(decodeStr[i] != '0' && decodeStr[i] != '1')
         {
             // other symbols including line feeding
-            //cout << decodeStr[i] << int(decodeStr[i]) << " 1234" << endl;
             decodeStr.erase(i);  // get rid of this symbol
             i--;
         }
@@ -99,7 +93,6 @@ void Preprocess::readDecodeFile() {
 
 
 string Preprocess::getDecodeStr() {
-    //cout << decodeStr << "..." << endl;
     return decodeStr;
 }
 
