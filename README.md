@@ -1,5 +1,4 @@
 # Huffman
-Project 2 for CS130A
 
 
 Huffman encoding algorithm is used to compress files based on the frequency of individual letters in these files. The idea is that we can use different number of bits to represent characters in a file based on their frequencies (i.e. using fewer bits to represent the more frequent characters than the least frequent ones). The general idea behind Huffman encoding is to allow a variable code length for different characters such that the most frequent character is encoded with the shortest code and vice versa. If all the characters occur with the same frequency, saving is more unlike.
